@@ -8,10 +8,9 @@ import { HeroService } from '../hero.service';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
+
   heroes: Hero[];
-
-  selectedHero: Hero;
-
+  
   /*
   Reserve the constructor for simple initialization such as wiring constructor parameters to properties. 
   The constructor shouldn't do anything. It certainly shouldn't call a function that makes HTTP requests 
@@ -56,8 +55,9 @@ export class HeroesComponent implements OnInit {
     this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
   }
 
-  onSelect(hero: Hero): void {
+  //No longer used after the hero list item was changed to a link to show hero details components /detail/:id
+  /*onSelect(hero: Hero): void {
     this.selectedHero = hero;
-  }
+  }*/
 
 }
