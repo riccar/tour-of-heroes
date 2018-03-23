@@ -55,9 +55,27 @@ export class HeroesComponent implements OnInit {
     this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
   }
 
-  //No longer used after the hero list item was changed to a link to show hero details components /detail/:id
-  /*onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-  }*/
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.heroService.addHero({ name } as Hero)
+      .subscribe(hero => {
+        this.heroes.push(hero);
+      });
+  }
+
+  /**
+   * Although the component delegates hero deletion to the HeroService, it remains responsible for updating 
+   * its own list of heroes. The component's delete() method immediately removes the hero-to-delete from that list, 
+   * anticipating that the HeroService will succeed on the server.
+   * 
+   * There's really nothing for the component to do with the Observable returned by heroService.delete(). It must subscribe anyway.
+   */
+
+  delete(hero: Hero): void {
+    //filter() method creates a new array with all elements that pass the test implemented by the provided function.
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero).subscribe();
+  }
 
 }
